@@ -328,7 +328,7 @@ if (btnBorrarTodo) {
         }
     });
 }
- 
+  
 // Actualizamos las estadísticas en las operaciones clave
 const fnGuardarTodoOriginal = guardarTodo;
 guardarTodo = function() {
