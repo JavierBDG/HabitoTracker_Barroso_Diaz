@@ -283,3 +283,58 @@ function generarTablaSeguimiento() {
 
     resumen.textContent = `Resumen: ${cumplidos} día(s) cumplido(s) | ${fallados} día(s) fallado(s). Total registros: ${registros.length}`;
 }
+
+// --- FASE 6: Estadísticas y Borrado general ---
+
+// Calcula y muestra las estadísticas en el panel principal
+function actualizarEstadisticas() {
+    const elHabitos = document.getElementById("stat-habitos");
+    const elCumplidos = document.getElementById("stat-cumplidos");
+    const elFallados = document.getElementById("stat-fallados");
+
+    if (!elHabitos || !elCumplidos || !elFallados) return;
+
+    const totalHabitos = habitos.length;
+    const diasCumplidos = registros.filter(r => r.cumplido === true).length;
+    const diasFallados = registros.filter(r => r.cumplido === false).length;
+
+    elHabitos.textContent = totalHabitos;
+    elCumplidos.textContent = diasCumplidos;
+    elFallados.textContent = diasFallados;
+}
+
+// Botón para eliminar todas las cookies y reiniciar la app
+const btnBorrarTodo = document.getElementById("btn-borrar-todo");
+
+if (btnBorrarTodo) {
+    btnBorrarTodo.addEventListener("click", function() {
+        const confirmar = confirm("¿Estás seguro de que quieres borrar todos los hábitos y registros? Esta acción no se puede deshacer.");
+        
+        if (confirmar) {
+            borrarCookie("habitos");
+            borrarCookie("registros");
+            habitos = [];
+            registros = [];
+
+            mostrarHabitos();
+            actualizarSelectorHabitos();
+            actualizarEstadisticas();
+            
+            if (typeof generarTablaSeguimiento === "function") {
+                generarTablaSeguimiento();
+            }
+
+            alert("Todos los datos han sido eliminados correctamente.");
+        }
+    });
+}
+
+// Actualizamos las estadísticas en las operaciones clave
+const fnGuardarTodoOriginal = guardarTodo;
+guardarTodo = function() {
+    fnGuardarTodoOriginal();
+    actualizarEstadisticas();
+};
+
+// Carga inicial de estadísticas al arrancar la app
+actualizarEstadisticas();
