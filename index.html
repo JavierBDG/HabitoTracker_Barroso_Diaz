@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HabitoTracker</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+    <header>
+        <h1>HabitoTracker</h1>
+        <p>Gestor de hábitos y seguimiento diario</p>
+        <!-- Menú de navegación según la Fase 4 -->
+        <nav id="menu">
+            <a href="#" id="btn-inicio">Inicio</a> | 
+            <a href="#" id="btn-ver-seguimiento">Ver seguimiento</a>
+        </nav>
+    </header>
+
+    <main>
+        <section id="zona-habitos">
+            <h2>Mis hábitos</h2>
+
+            <form id="form-habito">
+                <label for="nombre">Nombre del hábito:</label>
+                <input type="text" id="nombre" name="nombre" required>
+
+                <label for="descripcion">Descripción:</label>
+                <textarea id="descripcion" name="descripcion"></textarea>
+
+                <label for="categoria">Categoría:</label>
+                <select id="categoria" name="categoria">
+                    <option value="Salud">Salud</option>
+                    <option value="Estudio">Estudio</option>
+                    <option value="Ocio">Ocio</option>
+                    <option value="Deporte">Deporte</option>
+                    <option value="Otros">Otros</option>
+                </select>
+
+                <button type="submit">Crear hábito</button>
+            </form>
+
+            <div id="lista-habitos"></div>
+        </section>
+
+        <section id="zona-registros">
+            <h2>Registrar un día</h2>
+
+            <form id="form-registro">
+                <label for="habito-registro">Selecciona un hábito:</label>
+                <select id="habito-registro" name="habito-registro" required>
+                    <option value="">Selecciona un hábito</option>
+                </select>
+
+                <label for="fecha-registro">Fecha:</label>
+                <input type="date" id="fecha-registro" name="fecha-registro" required>
+
+                <label for="observaciones">Observaciones:</label>
+                <textarea id="observaciones" name="observaciones"></textarea>
+
+                <label>
+                    <input type="checkbox" id="cumplido" name="cumplido">
+                    Hábito cumplido
+                </label>
+
+                <button type="submit">Guardar registro</button>
+            </form>
+
+            <p id="mensaje-registro"></p>
+        </section>
+    </main>
+
+    <!-- Modal con la tabla de seguimiento -->
+    <div id="modal-seguimiento" class="modal oculto">
+        <div class="modal-contenido">
+            <button id="btn-cerrar-modal" class="btn-cerrar">&times;</button>
+            <h2>Tabla de seguimiento</h2>
+            
+            <table id="tabla-seguimiento">
+                <thead>
+                    <tr>
+                        <th>Hábito</th>
+                        <th>Fecha</th>
+                        <th>Observaciones</th>
+                        <th>Estado</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody id="cuerpo-tabla">
+                    <!-- Las filas se generarán por JS -->
+                </tbody>
+            </table>
+
+            <div id="resumen-seguimiento" class="resumen">
+                <!-- Resumen de cumplidos/fallados -->
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
