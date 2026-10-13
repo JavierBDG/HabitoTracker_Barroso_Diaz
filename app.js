@@ -214,18 +214,25 @@ modalSeguimiento.addEventListener("click", function(e) {
 
 // Función para alternar/cambiar el estado de un registro (Fase 5)
 function toggleCumplido(registroId) {
-    // Si la función se invoca directamente o mediante window.opener
-    const objetivo = window.opener ? window.opener : window;
+    // Si la ventana fue abierta con window.open, usamos opener; de lo contrario, la misma ventana
+    const objetivo = (window.opener && !window.opener.closed) ? window.opener : window;
     
+    // Buscamos el registro en el array de la ventana correspondiente
     const registro = objetivo.registros.find(r => r.id === registroId);
+    
     if (registro) {
+        // Cambiamos el estado booleano
         registro.cumplido = !registro.cumplido;
+        
+        // Guardamos los cambios en cookies y recalculamos
         objetivo.guardarTodo();
         
-        if (window.opener) {
+        // Redibujamos la tabla en la ventana actual (modal)
+        generarTablaSeguimiento();
+        
+        // Si hay ventana padre, también actualizamos su tabla si existe
+        if (window.opener && typeof window.opener.generarTablaSeguimiento === "function") {
             window.opener.generarTablaSeguimiento();
-        } else {
-            generarTablaSeguimiento();
         }
     }
 }
